@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 600px;
+            overflow: hidden;
+            background: red;
+        }
+        .active {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: black;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            line-height: 50px;
+            text-align: center;
+            /* animation: mymove 5s infinite; */
+        }
+        /* @keyframes mymove{
+            from {
+                top:0px;
+            }
+            to{
+                top:1000px;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+    <script>
+        // 生成
+
+        // 降落
+        // 对应消失
+        // 速度增加
+
+        // 创造一个实例
+
+        class Game {
+            constructor(name) {
+                // 字母集合
+                this.gather = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+                // 速度
+                this.spend = 1000;
+                // 等级
+                this.rank = 0;
+                // left
+                this.left = null
+                // top
+                this.top = 0;
+                // div的id
+                this.id = 0;
+                // 已生成的集合
+                this.initGather = [];
+                // 新生成div的left
+                
+                // 
+                this.init()
+                this.Del()
+            }
+            init() {
+                var that = this;
+                setInterval(function () {
+                    that.left = parseInt( Math.random(Math.round()*10)*1000);
+                    let cout = Math.round(Math.random() * 25)
+                    let newDiv = document.createElement("div")
+                    newDiv.className = "active"
+                    newDiv.id =that.id
+                    newDiv.style.left = that.left+"px";
+                    newDiv.innerText = that.gather[cout]
+                    that.initGather.push(newDiv)
+                    document.body.appendChild(newDiv)
+                    that.land(newDiv)
+                    that.id ++
+                }, that.spend)
+            }
+            land(newDiv){
+                var topDiv = newDiv
+                var top =0;
+                var that =this;
+                setInterval(function(){
+                    top ++
+                    topDiv.style.top = top+'px'
+                    if (top >=600){
+                        that.initGather.splice(i,1);               
+                        var delDiv = document.getElementById(i)
+                        document.body.removeChild(topDiv)
+                    }
+                },10)
+            }
+            Del(){
+                var that = this;
+                window.addEventListener('keydown',function(e){
+                    console.log(e)
+                    for(let i = 0; i <that.initGather.length; i++){
+                        if (e.key.toUpperCase() == that.initGather[i].innerText){        
+                            that.initGather.splice(i,1);               
+                            var delDiv = document.getElementById(i)
+                            document.body.removeChild(delDiv)
+                            return;
+                        }
+                    }
+                    
+                })
+            }
+        }
+        var par = new Game(123)
+
+
+    </script>
+</body>
+
+</html>
