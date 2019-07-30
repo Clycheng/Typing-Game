@@ -10,9 +10,11 @@
         body{
             margin: 0;
             padding: 0;
-            height: 600px;
-            overflow: hidden;
-            background: red;
+            width: 100%;
+            height: 500px;
+            border: 1px solid red;
+            /* overflow: hidden; */
+            /* background: red; */
         }
         .active {
             position: absolute;
@@ -53,7 +55,7 @@
                 // 字母集合
                 this.gather = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                 // 速度
-                this.spend = 1000;
+                this.spend = 4000;
                 // 等级
                 this.rank = 0;
                 // left
@@ -68,7 +70,7 @@
                 
                 // 
                 this.init()
-                this.Del()
+                // this.KDown()
             }
             init() {
                 var that = this;
@@ -80,9 +82,10 @@
                     newDiv.id =that.id
                     newDiv.style.left = that.left+"px";
                     newDiv.innerText = that.gather[cout]
-                    that.initGather.push(newDiv)
+                    that.initGather.push(newDiv.id)
                     document.body.appendChild(newDiv)
                     that.land(newDiv)
+                    that.KDown(newDiv)
                     that.id ++
                 }, that.spend)
             }
@@ -90,33 +93,46 @@
                 var topDiv = newDiv
                 var top =0;
                 var that =this;
-                setInterval(function(){
+                clearInterval(timer)
+                var timer = setInterval(function(){
                     top ++
                     topDiv.style.top = top+'px'
-                    if (top >=600){
-                        that.initGather.splice(i,1);               
-                        var delDiv = document.getElementById(i)
-                        document.body.removeChild(topDiv)
+                    if (top >=450){
+                        newDiv.parentNode.removeChild(newDiv)
+                        clearInterval(timer)
                     }
+                
                 },10)
             }
-            Del(){
+            KDown(newDiv){
                 var that = this;
+                var newDiv  = newDiv;
                 window.addEventListener('keydown',function(e){
-                    console.log(e)
                     for(let i = 0; i <that.initGather.length; i++){
-                        if (e.key.toUpperCase() == that.initGather[i].innerText){        
-                            that.initGather.splice(i,1);               
-                            var delDiv = document.getElementById(i)
-                            document.body.removeChild(delDiv)
-                            return;
+                        if (e.key.toUpperCase() == newDiv.innerText){        
+                            that.initGather.splice(i,1); 
+                            newDiv.parentNode.removeChild(newDiv)
+                            console.log(that.initGather)
+                                break;
+                    //         // }        
+                          
                         }
+
                     }
                     
                 })
             }
+            del(newDiv,e){
+                for(let i = 0; i <this.initGather.length; i ++){
+                    if (e.key.toUpperCase() == this.initGather[i].innerText){   
+                        this.initGather.splice(i,1)
+                        console.log(this.initGather)
+                        break;
+                    }
+                }
+            }
         }
-        var par = new Game(123)
+        var par = new Game()
 
 
     </script>
