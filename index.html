@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        body{
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -16,6 +16,7 @@
             /* overflow: hidden; */
             /* background: red; */
         }
+
         .active {
             position: absolute;
             top: 0;
@@ -29,6 +30,7 @@
             text-align: center;
             /* animation: mymove 5s infinite; */
         }
+
         /* @keyframes mymove{
             from {
                 top:0px;
@@ -54,10 +56,12 @@
             constructor(name) {
                 // 字母集合
                 this.gather = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-                // 速度
-                this.spend = 4000;
                 // 等级
                 this.rank = 0;
+                // 速度表
+                this.spendArr = [2000,1500,1000,900,800,700,600,500,400,300]
+                  // 速度
+                this.spend = this.spendArr[this.rank]
                 // left
                 this.left = null
                 // top
@@ -67,7 +71,7 @@
                 // 已生成的集合
                 this.initGather = [];
                 // 新生成div的left
-                
+
                 // 
                 this.init()
                 // this.KDown()
@@ -75,57 +79,93 @@
             init() {
                 var that = this;
                 setInterval(function () {
-                    that.left = parseInt( Math.random(Math.round()*10)*1000);
+                    that.left = parseInt(Math.random(Math.round() * 10) * 1000);
                     let cout = Math.round(Math.random() * 25)
                     let newDiv = document.createElement("div")
                     newDiv.className = "active"
-                    newDiv.id =that.id
-                    newDiv.style.left = that.left+"px";
+                    newDiv.id = that.id
+                    newDiv.style.left = that.left + "px";
                     newDiv.innerText = that.gather[cout]
-                    that.initGather.push(newDiv.id)
+                    that.initGather.push(newDiv.id);
+                    let initGatherLength = that.initGather.length
+                    switch (initGatherLength) {
+                        case 10:
+                            that.rank++;
+                            break;
+                        case 20:
+                            that.rank++;
+                            break;
+                        case 30:
+                            that.rank++;
+                            break;
+                        case 40:
+                            that.rank++;
+                            break;
+                        case 50:
+                            that.rank++;
+                            break;
+                        case 60:
+                            that.rank++;
+                            break;
+                        case 70:
+                            that.rank++;
+                            break;
+                        case 80:
+                            that.rank++;
+                            break;
+                        case 90:
+                            that.rank++;
+                            break;
+                        case 1000:
+                            that.rank++;
+                            break;
+                        default:
+                            break;
+                    }
                     document.body.appendChild(newDiv)
                     that.land(newDiv)
                     that.KDown(newDiv)
-                    that.id ++
+                    that.id++
                 }, that.spend)
             }
-            land(newDiv){
+            land(newDiv) {
                 var topDiv = newDiv
-                var top =0;
-                var that =this;
+                var top = 0;
+                var that = this;
                 clearInterval(timer)
-                var timer = setInterval(function(){
-                    top ++
-                    topDiv.style.top = top+'px'
-                    if (top >=450){
+                var timer = setInterval(function () {
+                    top++;
+                    topDiv.style.top = top + 'px';
+                    let DocDiv = document.getElementById(topDiv.id)
+                    if (DocDiv != null && top >= 450) {
+                        that.initGather.splice(0,1);
+                        console.log(that.initGather.length)
                         newDiv.parentNode.removeChild(newDiv)
                         clearInterval(timer)
                     }
-                
-                },10)
+                }, 10)
             }
-            KDown(newDiv){
+            KDown(newDiv) {
                 var that = this;
-                var newDiv  = newDiv;
-                window.addEventListener('keydown',function(e){
-                    for(let i = 0; i <that.initGather.length; i++){
-                        if (e.key.toUpperCase() == newDiv.innerText){        
-                            that.initGather.splice(i,1); 
-                            newDiv.parentNode.removeChild(newDiv)
-                            console.log(that.initGather)
-                                break;
-                    //         // }        
-                          
+                var newDiv = newDiv;
+                window.addEventListener('keydown', function (e) {
+                    for (let i = 0; i < that.initGather.length; i++) {
+                        if (e.key.toUpperCase() == newDiv.innerText) {
+                            that.initGather.splice(i, 1);
+                            newDiv.parentNode.removeChild(newDiv);
+                            break;
+                            //         // }        
+
                         }
 
                     }
-                    
+
                 })
             }
-            del(newDiv,e){
-                for(let i = 0; i <this.initGather.length; i ++){
-                    if (e.key.toUpperCase() == this.initGather[i].innerText){   
-                        this.initGather.splice(i,1)
+            del(newDiv, e) {
+                for (let i = 0; i < this.initGather.length; i++) {
+                    if (e.key.toUpperCase() == this.initGather[i].innerText) {
+                        this.initGather.splice(i, 1)
                         console.log(this.initGather)
                         break;
                     }
